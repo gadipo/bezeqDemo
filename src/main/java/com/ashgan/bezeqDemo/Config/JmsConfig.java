@@ -32,6 +32,12 @@ public class JmsConfig {
     @Value("${jms.type-id-property-name}")
     private String typeIdPropertyName;
 
+    @Value("${jms.listener.concurrency.min}")
+    private int listenerConcurrencyMin;
+
+    @Value("${jms.listener.concurrency.max}")
+    private int listenerConcurrencyMax;
+
     @Value("${jms.queue.usage-events}")
     public String usageEventQueue;
 
@@ -45,7 +51,7 @@ public class JmsConfig {
     public ConnectionFactory cachingConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL(brokerUrl);
-        activeMQConnectionFactory.setExceptionListener(throwable -> LOGGER.error("JMS Exception occurred", throwable));
+        activeMQConnectionFactory.setExceptionListener(throwable -> LOGGER.error("JMS Connection Exception occurred", throwable));
         
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(activeMQConnectionFactory);
         cachingConnectionFactory.setCacheConsumers(true);
@@ -84,10 +90,10 @@ public class JmsConfig {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(cachingConnectionFactory);
         factory.setMessageConverter(jacksonJmsMessageConverter());
-        factory.setConcurrency("3-10");
+        factory.setConcurrency(listenerConcurrencyMin + "-" + listenerConcurrencyMax);
         factory.setSessionTransacted(true);
         factory.setTransactionManager(jmsTransactionManager);
-        factory.setErrorHandler(throwable -> LOGGER.error("Error in JMS Listener", throwable));
+        factory.setErrorHandler(throwable -> LOGGER.error("Error processing JMS message in listener", throwable));
         return factory;
     }
 }
