@@ -4,9 +4,10 @@ package com.ashgan.bezeqDemo.Service;
 import com.ashgan.bezeqDemo.Model.UsageEvent;
 import com.ashgan.bezeqDemo.Model.UsageSummary;
 import com.ashgan.bezeqDemo.Repository.UsageEventRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,26 +15,25 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class UsageService {
 
-    // private final MessageProducer messageProducer;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsageService.class);
+
+    private final MessageProducer messageProducer;
     // private final UsageEventRepository repository;
     private final Map<String, UsageSummary> customerSummaries = new ConcurrentHashMap<>();
 
-    // public UsageService(MessageProducer messageProducer, UsageEventRepository repository) {
-    //     this.messageProducer = messageProducer;
-    //     this.repository = repository;
-    // }
+    public UsageService(MessageProducer messageProducer, UsageEventRepository repository) {
+        this.messageProducer = messageProducer;
+//         this.repository = repository;
+    }
 
-    // public void processEvent(UsageEvent event) {
-    //     UsageSummary summary = customerSummaries.computeIfAbsent(
-    //         event.getCustomerId(),
-    //         k -> new UsageSummary(k)
-    //     );
+    public void processEvent(UsageEvent event) {
+        UsageSummary summary = customerSummaries.computeIfAbsent(
+                event.getCustomerId(),
+                k -> new UsageSummary(k)
+        );
 
-    //     addEvent(summary, event);
-    //     messageProducer.sendToQueue(event);
-
-
-    // }
+            addEvent(summary, event);
+    }
 
     private void addEvent(UsageSummary usageSummary, UsageEvent usageEvent) {
         String eventType = usageEvent.getEventType();
@@ -61,13 +61,16 @@ public class UsageService {
                     usageSummary.setEnergyKWH(usageSummary.getEnergyKWH() + usageEvent.getAmount());
                 }
                 break;
+            default:
+                throw new IllegalArgumentException("Service Type: " + serviceType + "does not exist !");
         }
     }
 
+
     public UsageSummary getSummary(String customerId) {
         return customerSummaries.getOrDefault(
-            customerId,
-            new UsageSummary(customerId)
+                customerId,
+                new UsageSummary(customerId)
         );
     }
 
