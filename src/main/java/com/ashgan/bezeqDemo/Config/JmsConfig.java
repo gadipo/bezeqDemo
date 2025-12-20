@@ -38,14 +38,6 @@ public class JmsConfig {
     @Value("${jms.listener.concurrency.max}")
     private int listenerConcurrencyMax;
 
-    @Value("${jms.queue.usage-events}")
-    public String usageEventQueue;
-
-    @Value("${jms.queue.outage-alerts}")
-    public String outageAlertsQueue;
-
-    @Value("${jms.queue.billing-events}")
-    public String billingQueue;
 
     @Bean
     public ConnectionFactory cachingConnectionFactory() {
