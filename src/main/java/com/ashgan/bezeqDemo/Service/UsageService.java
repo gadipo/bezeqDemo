@@ -1,9 +1,9 @@
 package com.ashgan.bezeqDemo.Service;
 
-import com.ashgan.bezeqDemo.Entity.UsageRecord;
 import com.ashgan.bezeqDemo.Model.UsageEvent;
 import com.ashgan.bezeqDemo.Model.UsageSummary;
-import com.ashgan.bezeqDemo.Repository.UsageRecordRepository;
+import com.ashgan.bezeqDemo.Repository.UsageEventRepository;
+import jakarta.jms.MessageProducer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UsageService {
 
     private final MessageProducer messageProducer;
-    private final UsageRecordRepository repository;
+    private final UsageEventRepository repository;
     private final Map<String, UsageSummary> customerSummaries = new ConcurrentHashMap<>();
 
-    public UsageService(MessageProducer messageProducer, UsageRecordRepository repository) {
+    public UsageService(MessageProducer messageProducer, UsageEventRepository repository) {
         this.messageProducer = messageProducer;
         this.repository = repository;
     }
