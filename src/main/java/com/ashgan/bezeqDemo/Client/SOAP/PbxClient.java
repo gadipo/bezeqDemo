@@ -1,7 +1,7 @@
 package com.ashgan.bezeqDemo.Client.SOAP;
 
-import com.ashgan.bezeqDemo.soap.pbx.GetCallRecordRequest;
-import com.ashgan.bezeqDemo.soap.pbx.GetCallRecordResponse;
+import com.ashgan.bezeqDemo.soap.GetCallRecordRequest;
+import com.ashgan.bezeqDemo.soap.GetCallRecordResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.WebServiceTemplate;
