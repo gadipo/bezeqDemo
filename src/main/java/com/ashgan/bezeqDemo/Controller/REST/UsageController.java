@@ -29,7 +29,7 @@ public class UsageController {
 
         try {
             UsageSummary usageSummary = usageService.getSummary(String.valueOf(customerId));
-            LOGGER.info("Found Summary for Customer:{}. \n Summary: {}", customerId,usageSummary.toString());
+            LOGGER.info("Found Summary for Customer:{}. Summary: {}", customerId,usageSummary.toString());
             return ResponseEntity.ok(usageSummary);
         } catch (Exception e) {
             LOGGER.error("Could not Retrieve Customer:{} Summary",customerId, e);

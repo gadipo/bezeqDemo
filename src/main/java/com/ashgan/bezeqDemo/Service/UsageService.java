@@ -3,7 +3,6 @@ package com.ashgan.bezeqDemo.Service;
 
 import com.ashgan.bezeqDemo.Model.UsageEvent;
 import com.ashgan.bezeqDemo.Model.UsageSummary;
-import com.ashgan.bezeqDemo.Repository.UsageEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,10 @@ public class UsageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsageService.class);
 
     private final MessageProducer messageProducer;
-    // private final UsageEventRepository repository;
     private final Map<String, UsageSummary> customerSummaries = new ConcurrentHashMap<>();
 
-    public UsageService(MessageProducer messageProducer, UsageEventRepository repository) {
+    public UsageService(MessageProducer messageProducer) {
         this.messageProducer = messageProducer;
-//         this.repository = repository;
     }
 
     public void processEvent(UsageEvent event) {
