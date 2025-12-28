@@ -48,6 +48,7 @@ public class BillingScheduler {
     }
 
     private void billCustomer(String customerId) {
+        LOGGER.info("Checking if Customer:{} has any usage....",customerId);
         UsageSummary usageSummary = usageService.getSummary(customerId);
 
         if (usageSummary.getInternetUsageGB()>0) {
@@ -76,6 +77,8 @@ public class BillingScheduler {
     }
 
     private boolean sendBill(String customerId, String serviceType, double amount) {
+        LOGGER.info("Billing Scheduler is sending Customer:{} a {} Bill for {} NIS",customerId,serviceType,amount);
+
         BillCustomerResponse response = billingClient.sendCustomerBill(customerId,serviceType,amount);
 
         if (response.isSuccess()) {
