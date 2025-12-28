@@ -75,9 +75,11 @@ public class UsageEvent {
     public String toString() {
         return "UsageEvent{" +
                 "customerId='" + customerId + '\'' +
+                ", serviceType='" + serviceType + '\'' +
                 ", eventType='" + eventType + '\'' +
                 ", timestamp=" + timestamp +
                 ", amount=" + amount +
+                ", unit='" + unit + '\'' +
                 '}';
     }
 
