@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-@Component
 public class BillingClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BillingClient.class);
