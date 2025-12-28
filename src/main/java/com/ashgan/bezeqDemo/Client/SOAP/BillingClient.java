@@ -5,8 +5,10 @@ import com.ashgan.bezeqDemo.soap.BillCustomerRequest;
 import com.ashgan.bezeqDemo.soap.BillCustomerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
+@Component
 public class BillingClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BillingClient.class);
 
