@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 @RestController
-@RequestMapping("api/event-sim")
+@RequestMapping("/api/event-sim")
 public class EventSimulatorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventSimulatorController.class);
@@ -37,14 +37,17 @@ public class EventSimulatorController {
         this.messageProducer = messageProducer;
     }
 
-    @PostMapping("/sim-batch/{customers}/{events}")
-    public ResponseEntity<?> simulateBatchEvents(@RequestParam int customers, @RequestParam int events) {
+    @PostMapping("/sim-batch")
+    public ResponseEntity<?> simulateBatchEvents(@RequestParam String custs, @RequestParam String evnts) {
 
-        LOGGER.info("Simulating batch events: {} customers , {} events per customer",customers,events);
+        LOGGER.info("Simulating batch events: {} customers , {} events per customer",custs,evnts);
 
-        for (int i=0;i<=customers;i++) {
+        int customers = Integer.parseInt(custs);
+        int events = Integer.parseInt(evnts);
+
+        for (int i=1;i<=customers;i++) {
             String customerId = "CUST" + i;
-            for (int j=0;j<=events;j++) {
+            for (int j=1;j<=events;j++) {
                 UsageEvent event = generateRandomEvent(customerId);
                 messageProducer.sendMessage(usageEventsQueue,event);
             }
@@ -64,20 +67,26 @@ public class EventSimulatorController {
         switch (serviceType) {
             case "INTERNET":
                 usageEvent.setEventType("USAGE");
-                usageEvent.setAmount(random.nextDouble(MAX_INTERNET_PER_EVENT));
+                usageEvent.setAmount(formatToTwoDecimals(random.nextDouble(MAX_INTERNET_PER_EVENT)));
                 usageEvent.setUnit("GB");
                 break;
             case "LANDLINE":
                 usageEvent.setEventType("USAGE");
-                usageEvent.setAmount(random.nextDouble(MAX_LANDLINE_PER_EVENT));
+                usageEvent.setAmount(formatToTwoDecimals(random.nextDouble(MAX_LANDLINE_PER_EVENT)));
                 usageEvent.setUnit("MINUTES");
                 break;
             case "ENERGY":
                 usageEvent.setEventType("METER_READ");
-                usageEvent.setAmount(random.nextDouble(MAX_ENERGY_PER_EVENT));
+                usageEvent.setAmount(formatToTwoDecimals(random.nextDouble(MAX_ENERGY_PER_EVENT)));
                 usageEvent.setUnit("KWH");
                 break;
         }
+        LOGGER.info("Created a Usage Event ! Event:{}",usageEvent.toString());
         return usageEvent;
     }
+
+    private double formatToTwoDecimals(double value) {
+        return Double.parseDouble(String.format("%.2f", value));
+    }
+
 }
