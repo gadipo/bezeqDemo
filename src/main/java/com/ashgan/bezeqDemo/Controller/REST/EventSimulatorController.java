@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 @RestController
-@RequestMapping("api/eventSim")
+@RequestMapping("api/event-sim")
 public class EventSimulatorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventSimulatorController.class);
