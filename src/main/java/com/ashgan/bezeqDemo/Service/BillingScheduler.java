@@ -54,6 +54,7 @@ public class BillingScheduler {
         if (usageSummary.getInternetUsageGB()>0) {
             double amount = usageSummary.getInternetUsageGB() * internetRatePerGB;
             boolean success = sendBill(customerId,"INTERNET",amount);
+            boolean success = sendBill(customerId, "INTERNET", Util.formatToTwoDecimals(amount));
             if (success) {
                 usageSummary.setInternetUsageGB(0);
             }
@@ -61,7 +62,7 @@ public class BillingScheduler {
 
         if (usageSummary.getLandlineMinutes()>0) {
             double amount = usageSummary.getLandlineMinutes() * landLineRatePerMinute;
-            boolean success = sendBill(customerId,"LANDLINE",amount);
+            boolean success = sendBill(customerId,"LANDLINE",Util.formatToTwoDecimals(amount));
             if (success) {
                 usageSummary.setLandlineMinutes(0);
             }
@@ -69,7 +70,7 @@ public class BillingScheduler {
 
         if (usageSummary.getEnergyKWH()>0) {
             double amount = usageSummary.getEnergyKWH() * energyRatePerKWH;
-            boolean sucesss = sendBill(customerId,"ENERGY",amount);
+            boolean sucesss = sendBill(customerId,"ENERGY",Util.formatToTwoDecimals(amount));
             if(sucesss) {
                 usageSummary.setEnergyKWH(0);
             }
