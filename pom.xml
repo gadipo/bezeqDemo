@@ -30,6 +30,7 @@
 		<java.version>21</java.version>
         <pbx.wsdl.url>http://localhost:8081/ws/pbxWsdl.wsdl</pbx.wsdl.url>
         <billing.wsdl.url>http://localhost:8081/ws/billingWsdl.wsdl</billing.wsdl.url>
+        <billing.wsdl.dir>${project.basedir}/src/main/resources/wsdl</billing.wsdl.dir>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -102,14 +103,18 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <schemas>
-                        <schema>
-                            <url>${pbx.wsdl.url}</url>
-                        </schema>
-                        <schema>
-                            <url>${billing.wsdl.url}</url>
-                        </schema>
-                    </schemas>
+<!--                    <schemas>-->
+<!--                        <schema>-->
+<!--                            <url>${pbx.wsdl.url}</url>-->
+<!--                        </schema>-->
+<!--                        <schema>-->
+<!--                            <url>${billing.wsdl.url}</url>-->
+<!--                        </schema>-->
+<!--                    </schemas>-->
+                    <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                    <schemaIncludes>
+                        <include>billingWsdl.wsdl</include>
+                    </schemaIncludes>
                     <generatePackage>com.ashgan.bezeqDemo.soap</generatePackage>
                     <generateDirectory>${project.basedir}/target/generated-sources/jaxb</generateDirectory>
                     <extension>true</extension>

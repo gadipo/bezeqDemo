@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://ashgan/soap/bezeq" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ashgan/soap/bezeq" targetNamespace="http://ashgan/soap/bezeq">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ashgan/soap/bezeq">
+
+    <xs:element name="BillCustomerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerId" type="xs:string"/>
+                <xs:element name="serviceType" type="xs:string"/>
+                <xs:element name="amount" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="BillCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+                <xs:element name="billId" type="xs:int"/>
+                <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+                <xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+
+
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="BillCustomerRequest">
+    <wsdl:part element="tns:BillCustomerRequest" name="BillCustomerRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BillCustomerResponse">
+    <wsdl:part element="tns:BillCustomerResponse" name="BillCustomerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BillingPort">
+    <wsdl:operation name="BillCustomer">
+      <wsdl:input message="tns:BillCustomerRequest" name="BillCustomerRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:BillCustomerResponse" name="BillCustomerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BillingPortSoap11" type="tns:BillingPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="BillCustomer">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="BillCustomerRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BillCustomerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BillingPortService">
+    <wsdl:port binding="tns:BillingPortSoap11" name="BillingPortSoap11">
+      <soap:address location="http://localhost:8081/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
