@@ -37,7 +37,7 @@ public class UsageService {
         String serviceType = usageEvent.getServiceType();
 
         switch (serviceType) {
-            case "INTERNET":
+            case "MOBILE_INTERNET":
                 if (eventType.equals("USAGE")) {
                     usageSummary.setInternetUsageGB(usageSummary.getInternetUsageGB() + usageEvent.getAmount());
                 } else if (eventType.equals("OUTAGE")) {

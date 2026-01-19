@@ -2,6 +2,7 @@ package com.ashgan.bezeqDemo.Service;
 
 import com.ashgan.bezeqDemo.Client.SOAP.BillingClient;
 import com.ashgan.bezeqDemo.Model.UsageSummary;
+import com.ashgan.bezeqDemo.Util.Util;
 import com.ashgan.bezeqDemo.soap.BillCustomerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 @Service
@@ -53,8 +53,7 @@ public class BillingScheduler {
 
         if (usageSummary.getInternetUsageGB()>0) {
             double amount = usageSummary.getInternetUsageGB() * internetRatePerGB;
-            boolean success = sendBill(customerId,"INTERNET",amount);
-            boolean success = sendBill(customerId, "INTERNET", Util.formatToTwoDecimals(amount));
+            boolean success = sendBill(customerId, "MOBILE_INTERNET", Util.formatToTwoDecimals(amount));
             if (success) {
                 usageSummary.setInternetUsageGB(0);
             }

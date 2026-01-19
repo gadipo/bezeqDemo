@@ -56,7 +56,7 @@ public class EventSimulatorController {
     }
 
     private UsageEvent generateRandomEvent(String customerId) {
-        String[] serviceTypes = {"INTERNET","LANDLINE","ENERGY"};
+        String[] serviceTypes = {"MOBILE_INTERNET","LANDLINE","ENERGY"};
         String serviceType = serviceTypes[random.nextInt(serviceTypes.length)];
 
         UsageEvent usageEvent = new UsageEvent();
@@ -65,7 +65,7 @@ public class EventSimulatorController {
         usageEvent.setTimestamp(System.currentTimeMillis());
 
         switch (serviceType) {
-            case "INTERNET":
+            case "MOBILE_INTERNET":
                 usageEvent.setEventType("USAGE");
                 usageEvent.setAmount(formatToTwoDecimals(random.nextDouble(MAX_INTERNET_PER_EVENT)));
                 usageEvent.setUnit("GB");
